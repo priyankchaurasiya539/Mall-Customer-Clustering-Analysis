@@ -1,5 +1,6 @@
 import pandas as pd 
 from sklearn.preprocessing import StandardScaler , LabelEncoder
+import joblib
 
 #Load the dataset
 df = pd.read_csv("data/Mall_Customers (1).csv")
@@ -32,7 +33,8 @@ df_scaled = pd.DataFrame(scaled_data , columns=df_new.columns)
 
 #Save the data
 print(df_scaled.to_csv("data/processed_data.csv" , index=False) )
-
+joblib.dump(scaler , "models/scaler.pkl")
+joblib.dump(encoder , "models/encoder.pkl")
 print("Feature engineering done and all files saved successfully.")
 
 
