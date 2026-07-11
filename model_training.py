@@ -3,10 +3,12 @@ from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_score
 from kneed import  KneeLocator
 import joblib
+from sklearn.pipeline import Pipeline
 
 #Load the processed csv file 
 df = pd.read_csv("data/processed_data.csv")
 print(df.head())
+
 
 #Elbow Method + Knee Locator to find the value of k 
 
@@ -31,10 +33,23 @@ df["Cluster"] = clusters
 
 #Evaluate the silhoutte scoring 
 score = silhouette_score(df.drop("Cluster" , axis = 1 ) , df["Cluster"])
-print("Silhouette Scoring : " , score)
+print("Silhouette Scoring : " , round(score*100 , 2 ))
+
+#Load encoder + scaler
+encoder = joblib.load("models/encoder.pkl")
+scaler = joblib.load("models/scaler.pkl")
+
+#Create pipeline (encoder + scaler + kmeans)
+pipeline = Pipeline([
+    ("encoder", encoder),
+    ("scaler", scaler),
+    ("kmeans", kmeans)
+])
 
 #Save trained model + clustered dataset
 joblib.dump(kmeans, "models/kmeans_model.pkl")
+joblib.dump(pipeline, "models/cluster_pipeline.pkl")
 df.to_csv("data/customers_with_clusters.csv", index=False)
+
 
 print("Model training complete. Model and clustered dataset saved.")
