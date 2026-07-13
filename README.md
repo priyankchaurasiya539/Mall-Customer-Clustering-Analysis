@@ -1,2 +1,4 @@
-This model is based on the unsupervised machine learning.
-It used certains machine learning topics KMeans , FastAPI and Pydantic for data validation , Streamlit for user UI.
+# 🏬 Mall-Customer-Clustering-Analysis
+
+**About :** This is unsupervised machine learning project by using KMeans Clustering etc. The model has also a layer of FastAPI using pydantic to validate the future incoming data and a Streamlit UI version for the user's ease.
+
